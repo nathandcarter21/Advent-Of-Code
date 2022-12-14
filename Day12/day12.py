@@ -19,37 +19,45 @@ def bfs(i, j):
     q = []
     visited = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
     dir = [[1,0],[-1,0],[0,1],[0,-1]]
-    q.append((0,i,j))
+    q.append((i,j))
+    steps = 0
     while len(q) > 0:
-        d,i,j = q.pop(0)
-        if visited[i][j]:
-            continue
-        visited[i][j] = True
-        if i == end[0] and j == end[1]:
-            return d
-        for a in range(4):
-            newR = i + dir[a][0]
-            newC = j + dir[a][1]
-            if (0 <= newR < len(grid)) and (0 <= newC < len(grid[0])) and grid[newR][newC] <= grid[i][j] + 1:
-                q.append((d+1,newR,newC))
+        n = len(q)
+        for i in range(n):
+            i,j = q.pop(0)
+            if visited[i][j]:
+                continue
+            visited[i][j] = True
+            if i == end[0] and j == end[1]:
+                return steps
+            for a in range(4):
+                newR = i + dir[a][0]
+                newC = j + dir[a][1]
+                if (0 <= newR < len(grid)) and (0 <= newC < len(grid[0])) and grid[newR][newC] <= grid[i][j] + 1:
+                    q.append((newR,newC))
+        steps+=1
 
 def bfs2(i, j):
     q = []
     visited = [[False for _ in range(len(grid[0]))] for _ in range(len(grid))]
     dir = [[1,0],[-1,0],[0,1],[0,-1]]
-    q.append((0,i,j))
+    q.append((i,j))
+    steps = 0
     while len(q) > 0:
-        d,i,j = q.pop(0)
-        if visited[i][j]:
-            continue
-        visited[i][j] = True
-        if grid[i][j] == 0:
-            return d
-        for a in range(4):
-            newR = i + dir[a][0]
-            newC = j + dir[a][1]
-            if (0 <= newR < len(grid)) and (0 <= newC < len(grid[0])) and grid[newR][newC]+1 >= grid[i][j]:
-                q.append((d+1,newR,newC))
+        n = len(q)
+        for i in range(n):
+            i,j = q.pop(0)
+            if visited[i][j]:
+                continue
+            visited[i][j] = True
+            if grid[i][j] == 0:
+                return steps
+            for a in range(4):
+                newR = i + dir[a][0]
+                newC = j + dir[a][1]
+                if (0 <= newR < len(grid)) and (0 <= newC < len(grid[0])) and grid[newR][newC]+1 >= grid[i][j]:
+                    q.append((newR,newC))
+        steps+=1
 
 # part 1
 print(bfs(start[0],start[1]))
